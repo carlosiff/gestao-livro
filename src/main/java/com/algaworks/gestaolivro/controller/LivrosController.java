@@ -1,4 +1,4 @@
-package com.algaworks.controller;
+package com.algaworks.gestaolivro.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.algaworks.model.Livro;
-import com.algaworks.repository.Livros;
+import com.algaworks.gestaolivro.model.Livro;
+import com.algaworks.gestaolivro.repository.Livros;
 
 @Controller
-@RequestMapping("/livro")
-public class LivroController {
+@RequestMapping("/livros")
+public class LivrosController {
 	
 	@Autowired
 	private Livros livros;
@@ -32,7 +32,7 @@ public class LivroController {
 	}
 	@RequestMapping("/novo")
 	public ModelAndView novo(){
-		ModelAndView mv = new ModelAndView("FrmLivro");
+		ModelAndView mv = new ModelAndView("FrmLivros");
 		mv.addObject(new Livro());
 		return mv;
 		
@@ -41,7 +41,7 @@ public class LivroController {
 	@PostMapping("")
 
 	public ModelAndView salvar(@Validated Livro livro, Errors erros, RedirectAttributes redirectAttributes){
-		ModelAndView mv = new ModelAndView("FrmLivro");
+		ModelAndView mv = new ModelAndView("FrmLivros");
 		mv.addObject("livros", livros.findAll());
 		if(erros.hasErrors()){
 			return mv;
@@ -67,7 +67,7 @@ public class LivroController {
 	@RequestMapping(value ="/alterar/{idLivro}")
 	public ModelAndView alterarLivroByPathVariable(@PathVariable Long idLivro, HttpServletRequest request, 
 			HttpServletResponse response) {
-	ModelAndView mv = new ModelAndView("FrmLivro");
+	ModelAndView mv = new ModelAndView("FrmLivros");
 	mv.addObject("livros", livros.findAll());
 	Livro livro = livros.findOne(idLivro);
 	mv.addObject(livro);
@@ -80,4 +80,5 @@ public class LivroController {
 			attributes.addFlashAttribute("mensagem", "Livro excluído com sucesso!");
 			return "redirect:/livros";
 		}
+
 }

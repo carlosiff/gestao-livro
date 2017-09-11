@@ -1,6 +1,6 @@
-package com.algaworks.model;
+package com.algaworks.gestaolivro.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,21 +21,23 @@ public class Livro {
 	@Id
 	@GeneratedValue
 	private Long idLivro;
-	
+	@NotNull(message = "Autora é Inválido ou Inexistente")
 	@ManyToOne
 	@JoinColumn(name = "id_autora")
-	@NotNull(message="Autora obrigatório!")
 	private Autora autora;
 	
-	@NotEmpty(message="Nome obrigatório!")
-	private String nome;
+	@NotEmpty(message="O nome do livro é obrigatório!")
+	private String nomeL;
+	
 	@NotNull(message = "Data é obrigatória")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE )
-	private Date data;
-	@NotNull(message = "Valor é obrigatório")
+	private Date dataL;
+	
+	@NotNull(message = "O valor é obrigatória")
 	@DecimalMin(value = "0.01", message = "Valor não pode ser menor que 0,01")
-	private float valor;
+	private Float valor;
+	
 	public Long getIdLivro() {
 		return idLivro;
 	}
@@ -48,22 +50,22 @@ public class Livro {
 	public void setAutora(Autora autora) {
 		this.autora = autora;
 	}
-	public String getNome() {
-		return nome;
+	public String getNomeL() {
+		return nomeL;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNomeL(String nomeL) {
+		this.nomeL = nomeL;
 	}
-	public Date getData() {
-		return data;
+	public Date getDataL() {
+		return dataL;
 	}
-	public void setData(Date data) {
-		this.data = data;
+	public void setDataL(Date dataL) {
+		this.dataL = dataL;
 	}
-	public float getValor() {
+	public Float getValor() {
 		return valor;
 	}
-	public void setValor(float valor) {
+	public void setValor(Float valor) {
 		this.valor = valor;
 	}
 	

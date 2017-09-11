@@ -1,4 +1,4 @@
-package com.algaworks.controller;
+package com.algaworks.gestaolivro.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.algaworks.model.Autora;
-import com.algaworks.repository.Autoras;
-
+import com.algaworks.gestaolivro.model.Autora;
+import com.algaworks.gestaolivro.repository.Autoras;
 
 @Controller
 @RequestMapping("/autoras")
-public class AutoraController {
+public class AutorasController {
 	
 	@Autowired
 	private Autoras autoras;
@@ -68,7 +67,7 @@ public class AutoraController {
 	@RequestMapping(value ="/alterar/{idAutora}")
 	public ModelAndView alterarAutoraByPathVariable(@PathVariable Long idAutora, HttpServletRequest request, 
 			HttpServletResponse response) {
-	ModelAndView mv = new ModelAndView("FrmAutora");
+	ModelAndView mv = new ModelAndView("FrmAutoras");
 	mv.addObject("autoras", autoras.findAll());
 	Autora autora = autoras.findOne(idAutora);
 	mv.addObject(autora);
@@ -78,9 +77,8 @@ public class AutoraController {
 		@RequestMapping(value="{idAutora}", method = RequestMethod.DELETE)
 		public String excluir(@PathVariable Long idAutora, RedirectAttributes attributes) {
 			autoras.delete(idAutora);
-			attributes.addFlashAttribute("mensagem", "Autoras excluídas com sucesso!");
+			attributes.addFlashAttribute("mensagem", "Autora excluída com sucesso!");
 			return "redirect:/autoras";
 		}
-	
 
 }
