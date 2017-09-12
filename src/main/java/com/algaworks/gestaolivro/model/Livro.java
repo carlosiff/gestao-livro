@@ -2,6 +2,7 @@ package com.algaworks.gestaolivro.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,6 +21,7 @@ public class Livro {
 	
 	@Id
 	@GeneratedValue
+	@Column(name="id_livro")
 	private Long idLivro;
 	@NotNull(message = "Autora é Inválido ou Inexistente")
 	@ManyToOne

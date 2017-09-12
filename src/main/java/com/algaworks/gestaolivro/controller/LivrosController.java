@@ -1,5 +1,7 @@
 package com.algaworks.gestaolivro.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.algaworks.gestaolivro.model.Autora;
 import com.algaworks.gestaolivro.model.Livro;
+import com.algaworks.gestaolivro.repository.Autoras;
 import com.algaworks.gestaolivro.repository.Livros;
 
 @Controller
@@ -24,6 +28,10 @@ public class LivrosController {
 	
 	@Autowired
 	private Livros livros;
+	
+	@Autowired
+	private Autoras autora;
+	
 	@GetMapping("")
 	public ModelAndView listar() {
 		ModelAndView mv = new ModelAndView("LisLivro");
@@ -33,7 +41,9 @@ public class LivrosController {
 	@RequestMapping("/novo")
 	public ModelAndView novo(){
 		ModelAndView mv = new ModelAndView("FrmLivros");
+		List<Autora> allAutora = autora.findAllOrderByAutora();
 		mv.addObject(new Livro());
+		mv.addObject("autora", allAutora); 
 		return mv;
 		
 	}
@@ -67,11 +77,13 @@ public class LivrosController {
 	@RequestMapping(value ="/alterar/{idLivro}")
 	public ModelAndView alterarLivroByPathVariable(@PathVariable Long idLivro, HttpServletRequest request, 
 			HttpServletResponse response) {
-	ModelAndView mv = new ModelAndView("FrmLivros");
-	mv.addObject("livros", livros.findAll());
-	Livro livro = livros.findOne(idLivro);
-	mv.addObject(livro);
-	return mv;
+		List<Autora> allAutora = autora.findAllOrderByAutora();
+		ModelAndView mv = new ModelAndView("FrmLivros");
+		mv.addObject("livros", livros.findAll());
+		Livro livro = livros.findOne(idLivro);
+		mv.addObject(livro);
+		mv.addObject("autora", allAutora); 
+		return mv;
 	}
 	//Excluir
 		@RequestMapping(value="{idLivro}", method = RequestMethod.DELETE)
